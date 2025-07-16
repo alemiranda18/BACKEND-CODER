@@ -3,32 +3,27 @@ import express from 'express'
 const app = (express())
 app.use(express.json())
 
-const Port = 8080
+const PORT = 8080
 
 const generarID = (() => { let id = 0; return () => ++id; })();
 
 const productos = [
     {
         id: generarID(),
-        nombre: "Remera básica",
-        precio: 3500,
         cantidad: 20,
-        thumbnails: ["https://ejemplo.com/img/remera1.jpg"]
     },
     {
         id: generarID(),
-        nombre: "Buzo polar",
-        precio: 6500,
         cantidad: 15,
-        thumbnails: ["https://ejemplo.com/img/buzo1.jpg"]
     },
 ];
 // Get para generar el carrito
 const carritos = [];
+
 app.post('/api/carts/', (req, res) => {
     const nuevoCarrito = {
         id: Math.floor(Math.random() * 20),
-        productos: []
+        productos
     };
     carritos.push(nuevoCarrito);
     res.status(201).json(nuevoCarrito);
@@ -56,19 +51,19 @@ app.post('/api/carts/:cid/products/:pid', (req, res) => {
     if (!carrito) {
         return res.status(404).json({ error: "producto no encontrado" })
     }
-    let productoCarrito = carrito.productos.find(p => p.product === pid)
+    let productoCarrito = carrito.productos.find(p => p.id === pid)
     if (productoCarrito) {
         productoCarrito.cantidad += 1;
     }
     else {
-        carrito.productos.push({ product: pid, cantidad: 1 })
+        carrito.productos.push({ id: pid, cantidad: 1 })
     }
     res.status(200).json(carrito)
 })
 
 
 
-app.listen(Port, () => {
-    console.log(`el servidor que escucha en ${Port} odia a los bosteros`)
+app.listen(PORT, () => {
+    console.log(`el servidor que escucha en ${PORT} odia a los bosteros`)
 
 })

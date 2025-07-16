@@ -3,13 +3,13 @@ import express from 'express'
 const app = (express())
 app.use(express.json())
 
-const Port = 8080
+const PORT = 8080
 
 const generarID = (() => { let id = 0; return () => ++id; })();
 
 const productos = [
     {
-        id: generarID(), // Generado automáticamente
+        id: generarID(),
         title: "Remera orgánica blanca",
         description: "Remera 100% algodón orgánico, estilo minimalista",
         code: "RM-BL-ORG-001",
@@ -22,7 +22,7 @@ const productos = [
         ]
     },
     {
-        id: generarID(), // Generado automáticamente
+        id: generarID(),
         title: "Buzo orgánico negro",
         description: "Buzo 100% algodón orgánico",
         code: "RM-BL-ORG-001",
@@ -35,7 +35,7 @@ const productos = [
         ]
     },
     {
-        id: generarID(),// Generado automáticamente
+        id: generarID(),
         title: "Sueter lana",
         description: "Sueter 100% lana",
         code: "RM-BL-ORG-001",
@@ -48,7 +48,7 @@ const productos = [
         ]
     },
     {
-        id: generarID(), // Generado automáticamente
+        id: generarID(),
         title: "Pantalon cargo",
         description: "Pantalon cargo, estilo minimalista",
         code: "RM-BL-ORG-001",
@@ -61,7 +61,7 @@ const productos = [
         ]
     },
     {
-        id: generarID(), // Generado automáticamente
+        id: generarID(),
         title: "Campera de montaña",
         description: "Campera montañista impermeable y reversible",
         code: "RM-BL-ORG-001",
@@ -144,6 +144,6 @@ app.delete('/api/products/:id', (req, res) => {
 })
 // FIN SECCION PRODUCTOS
 
-app.listen(Port, () => {
-    console.log(`el servidor que escucha en ${Port} odia a los bosteros`)
+app.listen(PORT, () => {
+    console.log(`el servidor que escucha en ${PORT} odia a los bosteros`)
 })
