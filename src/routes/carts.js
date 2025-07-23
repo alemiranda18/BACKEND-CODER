@@ -1,10 +1,6 @@
-import express from 'express'
+import { Router } from "express";
 
-const app = (express())
-app.use(express.json())
-
-const PORT = 8080
-
+const Carts = Router()
 const generarID = (() => { let id = 0; return () => ++id; })();
 
 const productos = [
@@ -20,7 +16,7 @@ const productos = [
 // Get para generar el carrito
 const carritos = [];
 
-app.post('/api/carts/', (req, res) => {
+Carts.post('/', (req, res) => {
     const nuevoCarrito = {
         id: Math.floor(Math.random() * 20),
         productos
@@ -31,7 +27,7 @@ app.post('/api/carts/', (req, res) => {
 
 
 //get para ver todos los productos dentro del carrito
-app.get('/api/carts/:id', (req, res) => {
+Carts.get('/:id', (req, res) => {
     const id = Number(req.params.id)
     const filtrarProdCarrito = carritos.find(p => p.id === id)
     if (!filtrarProdCarrito) {
@@ -43,7 +39,7 @@ app.get('/api/carts/:id', (req, res) => {
 })
 
 //post para agregar prod al carrito
-app.post('/api/carts/:cid/products/:pid', (req, res) => {
+Carts.post('/:cid/products/:pid', (req, res) => {
     const cid = Number(req.params.cid)
     const pid = Number(req.params.pid)
 
@@ -60,10 +56,4 @@ app.post('/api/carts/:cid/products/:pid', (req, res) => {
     }
     res.status(200).json(carrito)
 })
-
-
-
-app.listen(PORT, () => {
-    console.log(`el servidor que escucha en ${PORT} odia a los bosteros`)
-
-})
+export default Carts 
